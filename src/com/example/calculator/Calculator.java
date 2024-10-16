@@ -1,47 +1,71 @@
 package com.example.calculator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 public class Calculator {
 
-    public static void main(String[] args) {
+    private List<Double> resultList = new ArrayList<>();
 
-        Scanner sc = new Scanner(System.in);
+    public List<Double> getResultList() {
+        return resultList;
+    }
 
-        int firstNum = sc.nextInt();
-        int secondNum = sc.nextInt();
+    public void setResultList(List<Double> resultList) {
+        this.resultList = resultList;
+    }
 
-        sc.nextLine();
-        char operator = sc.nextLine().charAt(0);
-        int result = 0;
-        boolean flag = true;
+    public double deleteResultList(int index) throws IndexOutOfBoundsException {
+        if(index >= resultList.size()) throw new IndexOutOfBoundsException("저장된 결과값 보다 큰 Index로 삭제 하였습니다 (index: " + index + ")");
+        return resultList.remove(index);
+    }
+
+    public double calculator(int firstNum, int secondNum, char operator) throws RuntimeException{
+        double result = 0;
 
         switch (operator) {
-            case '+':{
-                result = firstNum + secondNum;
+            case '+': {
+                result = addOperator(firstNum, secondNum);
                 break;
             }
-            case '-':{
-                result = firstNum - secondNum;
+            case '-': {
+                result = substractOperator(firstNum, secondNum);
                 break;
             }
-            case '*':{
-                result = firstNum * secondNum;
+            case '*': {
+                result = multipyOperator(firstNum, secondNum);
                 break;
             }
-            case '/':{
-                if(secondNum == 0){
-                    System.out.println("분모가 0입니다 나누기 계산이 되지 않습니다.");
-                    flag = false;
-                    break;
-                }
-                result = firstNum / secondNum;
+            case '/': {
+                result = divideOperator(firstNum, secondNum);
                 break;
+            }
+            default: {
+                throw new RuntimeException("잘못된 연산자 입니다");
             }
         }
+        resultList.add(result);
+        return result;
+    }
 
-        if(flag == true)
-            System.out.println("result = " + result);
+    private double addOperator(int firstNum, int secondNum){
+
+        return firstNum + secondNum;
+    }
+
+    private double substractOperator(int firstNum, int secondNum){
+        return firstNum - secondNum;
+    }
+
+    private double multipyOperator(int firstNum, int secondNum) {
+        return firstNum * secondNum;
+    }
+
+    private double divideOperator(int firstNum, int secondNum) throws RuntimeException {
+        if(secondNum == 0) throw new ArithmeticException("분모의 값이 0입니다 계산을 실행할수 없습니다");
+        return (double)firstNum / secondNum;
     }
 
 }
