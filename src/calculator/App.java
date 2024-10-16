@@ -1,16 +1,15 @@
-package com.example.calculator;
+package calculator;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void run() {
 
         Calculator calculator = new Calculator();
 
         Scanner sc = new Scanner(System.in);
-        String exitVal = "exit";
         Boolean flag = true;
 
         while (flag) {
@@ -19,17 +18,18 @@ public class App {
 
             switch (command) {
                 case "계산": {
-                    int firstNum = sc.nextInt();
-                    int secondNum = sc.nextInt();
-                    sc.nextLine();
-                    char operator = sc.nextLine().charAt(0);
-
                     try {
+                        System.out.println("첫번쨰 숫자를 입력해주세요 !");
+                        int firstNum = Parser.parseInputValue(sc.nextLine());
+                        System.out.println("연산자를 입력해주세요 !");
+                        char operator = Parser.parseOperator(sc.nextLine());
+                        System.out.println("두번쨰 숫자를 입력해주세요 !");
+                        int secondNum = Parser.parseInputValue(sc.nextLine());
+
                         double result = calculator.calculator(firstNum, secondNum, operator);
                         System.out.println(firstNum + " " + operator + " " + secondNum + " = " + result);
                     } catch (RuntimeException e) {
                         System.err.println(e.getMessage());
-                        Thread.sleep(100);
                     }
                     break;
                 }

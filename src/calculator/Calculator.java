@@ -1,9 +1,7 @@
-package com.example.calculator;
+package calculator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 public class Calculator {
 
